@@ -6,8 +6,12 @@ import { UsersModule } from './users/users.module';
 import { ProyectsModule } from './proyects/proyects.module';
 
 
+
+
 @Module({
-  imports: [ProyectsModule, , AuthModule, UsersModule],
+
+  imports: [ProyectsModule, AuthModule, UsersModule],
+
   controllers: [AppController],
   providers: [AppService],
 })
