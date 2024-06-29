@@ -11,7 +11,9 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
 
+
   imports: [AllModule, HabitsModule, NotesModule, QuotesModule, FavoritesModule, AuthModule, UsersModule],
+
   controllers: [AppController],
   providers: [AppService],
 })
