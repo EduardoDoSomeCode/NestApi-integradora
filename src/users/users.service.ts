@@ -4,7 +4,7 @@ export type User = any;
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
+  private  users = [
     {
       userId: 1,
       username: 'john',
@@ -34,5 +34,12 @@ export class UsersService {
     if (index !== -1) {
       this.users.splice(index, 1);
     }
+  }
+
+  async postNewUser(newUser: Omit<User, 'userId'>): Promise<User> {
+    const newUserId = this.users.length > 0 ? Math.max(...this.users.map(u => u.userId)) + 1 : 1;
+    const user: User = { userId: newUserId, ...newUser };
+    this.users.push(user);
+    return user;
   }
 }
