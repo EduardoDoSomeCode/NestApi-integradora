@@ -34,7 +34,7 @@ export class AllService {
   findOne(id: number): AllTodo {
     const todo = this.Alltodos.find(todo => todo.id === id);
     if (!todo) {
-      throw new NotFoundException(`Todo with ID ${id} not found`);
+      throw new NotFoundException(`Su tarea no existe con:  ${id} `);
     }
     return todo;
   }
@@ -42,7 +42,7 @@ export class AllService {
   update(id: number, updateAllDto: UpdateAllDto): AllTodo {
     const todoIndex = this.Alltodos.findIndex(todo => todo.id === id);
     if (todoIndex === -1) {
-      throw new NotFoundException(`Todo with ID ${id} not found`);
+      throw new NotFoundException(`Su tarea no existe con:  ${id} `);
     }
     const updatedTodo = { ...this.Alltodos[todoIndex], ...updateAllDto };
     this.Alltodos[todoIndex] = updatedTodo;
@@ -52,7 +52,7 @@ export class AllService {
   remove(id: number): void {
     const todoIndex = this.Alltodos.findIndex(todo => todo.id === id);
     if (todoIndex === -1) {
-      throw new NotFoundException(`Todo with ID ${id} not found`);
+      throw new NotFoundException(`Su tarea no existe con:  ${id} `);
     }
     this.Alltodos.splice(todoIndex, 1);
   }
