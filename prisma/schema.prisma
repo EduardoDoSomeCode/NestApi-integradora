@@ -4,13 +4,13 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
@@ -19,10 +19,9 @@ model User {
   email String @db.VarChar(30) @unique
   password String @db.VarChar(15)
   ItHasIntegration Boolean
-
-  alls All[]
-  habits Habits[]
-  notes Notes[]
+  alls             All[]
+  habits           Habits[]
+  notes            Notes[]
 }
 
 model All {
@@ -45,24 +44,24 @@ model Notes {
   userId BigInt
   idUser User @relation(fields: [userId], references: [IdUser])
   IsFavorite Boolean @unique
-  title String @db.VarChar(40)
-  body String @db.VarChar(250)
+  title      String  @db.VarChar(40)
+  body       String  @db.VarChar(250)
 
   favorites Favorites[]
-  quotes Quotes[]
+  quotes    Quotes[]
 }
 
 model Favorites {
-  id BigInt @id @default(autoincrement())
+  id         Int  @id @default(autoincrement())
   IsFavorite Boolean
 
   notes Notes? @relation(fields: [IsFavorite], references: [IsFavorite])
 }
 
 model Quotes {
-  id BigInt @id @default(autoincrement())
-  phrase String @db.VarChar(50)
-  author String @db.VarChar(25)
+  id         Int  @id @default(autoincrement())
+  phrase     String  @db.VarChar(50)
+  author     String  @db.VarChar(25)
   IdFavorite Boolean
 
   notes Notes? @relation(fields: [IdFavorite], references: [IsFavorite])
