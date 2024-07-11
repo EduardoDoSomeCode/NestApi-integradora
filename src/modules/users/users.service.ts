@@ -1,38 +1,29 @@
 import { Injectable } from '@nestjs/common';
-
-export type User = any;
-
+import { User } from '@prisma/client';
+import { PrismaService } from 'src/common/utils/prisma.service';
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      email: 'johonFK196@gmail.com',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      email: 'marr491_@gmail.com',
-      password: 'guess',
-    },
-    {
-      userId: 3,
-      username: 'Gururior',
-      email: 'gurur9991@gmail.com',
-      password: 'AmerikaYa19',
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async findOne(userId: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: { IdUser:Number(userId) },
+    });
   }
 
   async deleteUser(userId: number): Promise<void> {
-    const index = this.users.findIndex((user) => user.userId === userId);
-    if (index !== -1) {
-      this.users.splice(index, 1);
-    }
+    await this.prisma.user.delete({
+      where: { IdUser:Number(userId) },
+    });
   }
+
+  async postNewUser(newUser: Omit<User, 'IdUser'>):Promise<User> {
+    return this.prisma.user.create({
+      data: newUser,
+    });
+
+  }
+
 }
+export { User };
+
