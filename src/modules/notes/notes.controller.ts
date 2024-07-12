@@ -1,12 +1,16 @@
+// Importamos los decoradores y las clases necesarias desde '@nestjs/common'
+// el servicio de la entidad y  los DTOs (Data Transfer Objects) para manejar los datos de entrada
 import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 
+// Definimos el controlador para manejar las rutas relacionadas con 'notes' e inyectamos el servicio en el constructor
 @Controller('notes')
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
+// Ruta para crear una nueva entidad
   @Post()
   async create(@Body() createNoteDto: CreateNoteDto) {
     try {
@@ -16,6 +20,7 @@ export class NotesController {
     }
   }
 
+// Ruta para obtener todas las entidades  
   @Get() 
   async findAll() {
     try {
@@ -25,6 +30,7 @@ export class NotesController {
     }
   }
 
+// Ruta para obtener una entidad por su ID
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -41,6 +47,7 @@ export class NotesController {
     }
   }
 
+// Ruta para actualizar una entidad por su ID
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
     try {
@@ -56,6 +63,7 @@ export class NotesController {
     }
   }
 
+// Ruta para eliminar una entidad por su ID
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {
