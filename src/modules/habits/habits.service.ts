@@ -4,7 +4,7 @@ import { Prisma, Habits } from '@prisma/client';
 
 export interface Habit { // Definición de la interfaz Habit
   id: number;
-  text: string;
+  title: string;
   date: Date;
 }
 
@@ -13,17 +13,17 @@ export class HabitsService { //Se crea una Array de hábitos que se muestra
   private sampleHabits: Habit[] = [
     {
       id: 1,
-      text: 'Read for 30 minutes daily',
+      title: 'Read for 30 minutes daily',
       date: new Date('2024-07-05'),
     },
     {
       id: 2,
-      text: 'Exercise for 1 hour',
+      title: 'Exercise for 1 hour',
       date: new Date('2024-07-04'),
     },
     {
       id: 3,
-      text: 'Meditate for 15 minutes',
+      title: 'Meditate for 15 minutes',
       date: new Date('2024-07-03'),
     },
   ];
@@ -37,7 +37,7 @@ export class HabitsService { //Se crea una Array de hábitos que se muestra
     try {
       const newHabit = await this.prisma.habits.create({ //Crea un nuevo hábito en la base de datos utilizando Prisma
         data: {
-          title: habitData.text,
+          title: habitData.title,
           recentDate: habitData.date,
           userId: 1, // Ajusta el userId según tu lógica 
         },
