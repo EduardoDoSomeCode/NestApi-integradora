@@ -10,9 +10,15 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-
-
-  imports: [AllModule, HabitsModule, NotesModule, QuotesModule, FavoritesModule, AuthModule, UsersModule],
+  imports: [
+    AllModule,
+    HabitsModule,
+    NotesModule,
+    QuotesModule,
+    FavoritesModule,
+    AuthModule,
+    UsersModule,
+  ],
 
   controllers: [AppController],
   providers: [AppService],
