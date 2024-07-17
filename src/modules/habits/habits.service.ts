@@ -5,7 +5,9 @@ import ExceptionBad from 'src/common/utils/ExceptionBad';
 
 export interface Habit { // Definición de la interfaz Habit
   id: number;
+  userId: number;
   title: string; 
+  description: string;
   date: Date; 
 }
 
@@ -14,17 +16,23 @@ export class HabitsService {
   private sampleHabits: Habit[] = [ // Ejemplos de hábitos predefinidos
     {
       id: 1,
-      title: 'Read for 30 minutes daily',
+      userId: 1,
+      title: 'Meditate for 15 minutes',
+      description: '7nuu',
       date: new Date('2024-07-05'),
     },
     {
       id: 2,
+      userId: 2,
       title: 'Exercise for 1 hour',
+      description: '7nuu',
       date: new Date('2024-07-04'),
     },
     {
       id: 3,
+      userId: 2,
       title: 'Meditate for 15 minutes',
+      description: '7nuu',
       date: new Date('2024-07-03'),
     },
   ];
