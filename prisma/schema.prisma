@@ -49,8 +49,16 @@ model Notes {
   
   favorites  Favorites[]
   quotes     Quotes[]
+  multimedia Multimedia[]
 }
-
+model Multimedia {
+  id        BigInt  @id @default(autoincrement())
+  notesId   BigInt
+  note       Notes     @relation(fields: [notesId], references: [idNotes])
+  itIsImage Boolean
+  link      String  @db.VarChar(500)
+  itIsSound String  @db.VarChar(255)
+}
 model Favorites {
   id         Int       @id @default(autoincrement())
   noteId     BigInt    // Cambia este campo para que haga referencia a Notes
