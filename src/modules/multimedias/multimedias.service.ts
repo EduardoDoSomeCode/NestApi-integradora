@@ -8,8 +8,8 @@ export interface multimedia {
  
   id: number;
   itIsImage: boolean;
-  link: bigint;
-  itIsSound: bigint;
+  link: string;
+  itIsSound: string;
 }
 
 @Injectable()
@@ -19,20 +19,20 @@ export class MultimediasService {
     {
       id: 1,
       itIsImage: true,
-      link: BigInt(1234567890123456789),
-      itIsSound: BigInt(9876543210987654321),
+      link: 'https://es.wikipedia.org/wiki/Panzer_VI_Tiger',
+      itIsSound: '',
     },
     {
       id: 2,
       itIsImage: false,
-      link: BigInt(2345678901234567890),
-      itIsSound: BigInt(765432109876543210),
+      link: 'https://es.wikipedia.org/wiki/Panzer_VI_Tiger',
+      itIsSound: '',
     },
     {
       id: 3,
       itIsImage: true,
-      link: BigInt(3456789012345678901),
-      itIsSound: BigInt(7654321098765432109),
+      link: 'https://es.wikipedia.org/wiki/Panzer_VI_Tiger',
+      itIsSound: '',
     },
   ];
   

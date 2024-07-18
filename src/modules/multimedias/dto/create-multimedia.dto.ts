@@ -1,9 +1,11 @@
+import { IsString, Length } from 'class-validator';
+
 export class CreateMultimediaDto {
 
-    id: bigint;
-    itIsImage: boolean;
-    link: bigint;
-    itIsSound: bigint;
+    id: BigInt;
+    itIsImage: Boolean;
+    link: String;
+    itIsSound: String;
 
 
 }

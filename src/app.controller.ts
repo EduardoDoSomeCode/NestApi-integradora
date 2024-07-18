@@ -6,6 +6,10 @@ import { UsersService } from './modules/users/users.service';
 
 @Controller()
 export class AppController {
+  getHello(): any {
+    throw new Error('Method not implemented.');
+  }
+  
   constructor(
     private authService: AuthService,
     private usersService: UsersService
