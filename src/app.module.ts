@@ -8,19 +8,11 @@ import { QuotesModule } from './modules/quotes/quotes.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-
+import { PrismaService } from './common/utils/prisma.service';
 @Module({
   imports: [
-    AllModule,
-    HabitsModule,
-    NotesModule,
-    QuotesModule,
-    FavoritesModule,
-    AuthModule,
-    UsersModule,
-  ],
-
+    AllModule,HabitsModule,NotesModule,QuotesModule,FavoritesModule,AuthModule,UsersModule,],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
