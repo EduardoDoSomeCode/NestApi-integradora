@@ -16,7 +16,7 @@ import { APP_PIPE } from '@nestjs/core';
 
   imports: [AllModule, HabitsModule, NotesModule, QuotesModule, FavoritesModule, AuthModule, UsersModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService], 
   
 })
 export class AppModule {}
