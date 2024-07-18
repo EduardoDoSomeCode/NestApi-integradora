@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { QuotesService } from './quotes.service';
 import { CreateQuoteDto } from './dto/create-quote.dto';
 import { UpdateQuoteDto } from './dto/update-quote.dto';
@@ -12,19 +12,17 @@ export class QuotesController {
     return this.quotesService.create(createQuoteDto);
   }
 
-  @Get()
-  findAll() {
-    return this.quotesService.findAll();
-  }
+ 
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.quotesService.findOne(+id);
+    return this.quotesService.findById(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateQuoteDto: UpdateQuoteDto) {
-    return this.quotesService.update(+id, updateQuoteDto);
+    let idNumber = parseInt(id)
+    return this.quotesService.update(idNumber, updateQuoteDto);
   }
 
   @Delete(':id')
