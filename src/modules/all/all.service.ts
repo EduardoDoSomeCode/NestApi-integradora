@@ -28,19 +28,18 @@ export class AllService {
   ];
 
   // Método para crear una nueva tarea
-  async create(createAllDto: CreateAllDto): Promise<All> {
+  async create(createAllDto: CreateAllDto): Promise<any> {
     try {
-      const newTodo: All = {
-        idAll: BigInt(this.Alltodos.length + 1), // Genera un nuevo ID (simulado)
-        ...createAllDto,
-        userId: 0n
-      };
-      this.Alltodos.push(newTodo); // Agrega la nueva tarea al array simulado
-      return newTodo; // Retorna la tarea creada
+      const newItem = await this.prisma.all.create({
+        data: createAllDto,
+      });
+      return newItem;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); // Lanza una excepción personalizada en caso de error
+      console.error('Error al crear el elemento:', error);
+      throw new Error('Error al crear el elemento');
     }
   }
+
 
   // Método para obtener todas las tareas
   async findAll(): Promise<All[]> {
@@ -52,41 +51,42 @@ export class AllService {
   }
 
   // Método para encontrar una tarea por su ID
-  async findOne(id: bigint): Promise<All> {
+  async findOne(id: bigint): Promise<any> {
     try {
-      const todo = this.Alltodos.find((todo) => todo.idAll === id); // Busca la tarea por su ID en el array simulado
-      return todo; // Retorna la tarea encontrada o undefined si no se encuentra
+      const item = await this.prisma.all.findUnique({
+        where: { idAll: id },
+      });
+      return item;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); // Lanza una excepción personalizada en caso de error
+      console.error('Error al obtener el elemento:', error);
+      throw new Error('Error al obtener el elemento');
     }
   }
 
   // Método para actualizar una tarea existente
-  async update(id: bigint, updateAllDto: UpdateAllDto): Promise<All> {
+  async update(id: bigint, updateAllDto: UpdateAllDto): Promise<any> {
     try {
-      const todoIndex = this.Alltodos.findIndex((todo) => todo.idAll === id); // Encuentra el índice de la tarea a actualizar
-      if (todoIndex === -1) {
-        return null; // Retorna null si la tarea no existe
-      }
-      const updatedTodo = { ...this.Alltodos[todoIndex], ...updateAllDto }; // Crea un nuevo objeto con los datos actualizados
-      this.Alltodos[todoIndex] = updatedTodo; // Reemplaza la tarea antigua con la actualizada en el array simulado
-      return updatedTodo; // Retorna la tarea actualizada
+      const updatedItem = await this.prisma.all.update({
+        where: { idAll: id },
+        data: updateAllDto,
+      });
+      return updatedItem;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); // Lanza una excepción personalizada en caso de error
+      console.error('Error al actualizar el elemento:', error);
+      throw new Error('Error al actualizar el elemento');
     }
   }
 
   // Método para eliminar una tarea por su ID
-  async remove(id: bigint): Promise<boolean> {
+  async remove(id: bigint): Promise<any> {
     try {
-      const todoIndex = this.Alltodos.findIndex((todo) => todo.idAll === id); // Encuentra el índice de la tarea a eliminar
-      if (todoIndex === -1) {
-        return false; // Retorna false si la tarea no existe
-      }
-      this.Alltodos.splice(todoIndex, 1); // Elimina la tarea del array simulado
-      return true; // Retorna true si la tarea fue eliminada con éxito
+      const deletedItem = await this.prisma.all.delete({
+        where: { idAll: id },
+      });
+      return deletedItem;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); // Lanza una excepción personalizada en caso de error
+      console.error('Error al eliminar el elemento:', error);
+      return null;
     }
   }
 }

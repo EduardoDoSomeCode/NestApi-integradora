@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   NotFoundException,
+  Put,
 } from '@nestjs/common';
 import { AllService } from './all.service';
 import { CreateAllDto } from './dto/create-all.dto';
@@ -19,39 +20,35 @@ export class AllController {
   constructor(private readonly allService: AllService) {}
 
   @Post()
-  async create(@Body() createAllDto: CreateAllDto): Promise<All> {
-    return this.allService.create(createAllDto);
+  async create(@Body() createAllDto: CreateAllDto): Promise<any> {
+      return this.allService.create(createAllDto);
   }
 
   @Get()
-  async findAll(): Promise<All[]> {
+  async findAll(): Promise<any> {
     return this.allService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: bigint): Promise<All> {
-    const todo = await this.allService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: string): Promise<any> {
+    let searchId = BigInt(id)
+    const todo = this.allService.findOne(searchId);
     if (!todo) {
       throw new NotFoundException(`La tarea con ID ${id} no se encontró.`);
     }
     return todo;
   }
 
-  @Patch(':id')
-  async update(
-    @Param('id', ParseIntPipe) id: bigint,
-    @Body() updateAllDto: UpdateAllDto,
-  ): Promise<All> {
-    const updatedTodo = await this.allService.update(id, updateAllDto);
-    if (!updatedTodo) {
-      throw new NotFoundException(`La tarea con ID ${id} no se encontró.`);
-    }
-    return updatedTodo;
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateAllDto: UpdateAllDto): Promise<any> {
+    const bigIntId = BigInt(id);
+    return this.allService.update(bigIntId, updateAllDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: bigint): Promise<void> {
-    const result = await this.allService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id:  string): Promise<any> {
+    let numberToSearch = BigInt(id)
+    const result = this.allService.remove(numberToSearch);
     if (!result) {
       throw new NotFoundException(`La tarea con ID ${id} no se encontró.`);
     }
