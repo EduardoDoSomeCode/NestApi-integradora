@@ -1,6 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+<<<<<<< HEAD
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  // Configuración global del ValidationPipe
+  app.useGlobalPipes(new ValidationPipe());
+
+=======
 
 function replacer(key: any, value: any) {
   if (typeof value === 'bigint') {
@@ -27,6 +36,7 @@ async function bootstrap() {
   });
 
 
+>>>>>>> 6376f00cdb0aebf197130b7618c532fe2a3b3769
   await app.listen(3000);
 }
 bootstrap();
