@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMultimediaDto } from './dto/create-multimedia.dto';
 import { UpdateMultimediaDto } from './dto/update-multimedia.dto';
+import { PrismaService } from '../../common/utils/prisma.service';
+import ExceptionBad from 'src/common/utils/ExceptionBad';
 
 @Injectable()
 export class MultimediasService {
