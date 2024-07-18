@@ -23,7 +23,9 @@ export class UsersController {
     await this.usersService.deleteUser(userId);
   }
   @Post()
-  async postNewUser(@Body() newUser: Omit<User, 'userId'>): Promise<User> {
+  async postNewUser(@Body() newUser: Omit<User, 'userId'>) {
     return await this.usersService.postNewUser(newUser);
+
+    
   }
 }

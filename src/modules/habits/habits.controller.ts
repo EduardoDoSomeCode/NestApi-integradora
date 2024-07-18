@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { HabitsService } from './habits.service';
 import { CreateHabitDto } from './dto/create-habit.dto';
 import { UpdateHabitDto } from './dto/update-habit.dto';
+import { Habits } from '@prisma/client';
 
 @Controller('habits')
 export class HabitsController {
   constructor(private readonly habitsService: HabitsService) {}
 
-  @Post()
-  create(@Body() createHabitDto: CreateHabitDto) {
-    return this.habitsService.create(createHabitDto);
+  @Post() // La acción POST para crear un nuevo hábito en DTO
+  createTask(@Body() newHabit: CreateHabitDto): Promise<Habits> {
+    return this.habitsService.createHabitFromSample({ ...newHabit } as any);
   }
 
-  @Get()
-  findAll() {
+  @Get() // Para obtener todos los hábitos
+  findAll(): Promise<Habits[]> {
     return this.habitsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.habitsService.findOne(+id);
+  @Get(':id') // Es para obtener un hábito mediante por su ID
+  findOne(@Param('id', ParseIntPipe) userId: bigint): Promise<Habits> {
+    return this.habitsService.findOne(userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHabitDto: UpdateHabitDto) {
-    return this.habitsService.update(+id, updateHabitDto);
+  @Patch(':id') //Funciona para actualizar un hábito mediante por su ID
+  update(@Param('id', ParseIntPipe) userId: bigint, @Body() UpdateHabitDto: UpdateHabitDto): Promise<Habits> {
+    return this.habitsService.update(userId, UpdateHabitDto as any);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.habitsService.remove(+id);
+  @Delete(':id') //Se ELimina un hábito mediante por su ID
+  remove(@Param('id', ParseIntPipe) userId: bigint): Promise<Habits> {
+    return this.habitsService.remove(userId);
   }
 }
