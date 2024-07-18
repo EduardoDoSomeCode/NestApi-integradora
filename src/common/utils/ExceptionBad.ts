@@ -1,25 +1,25 @@
 import { BadRequestException } from "@nestjs/common";
 
-export default function  ExceptionBad (code: string, error: Error, meta: any){
-
-    switch(code){
+// Función para lanzar excepciones específicas basadas en el código de error de Prisma
+export default function ExceptionBad(code: string, error: Error, meta: any) {
+    switch (code) {
         case 'P1000':
         throw new BadRequestException({
             message: 'Error de autenticación en el servidor de base de datos en {database_host}',
             meta
         });
         case 'P1001':
-            throw new BadRequestException({
+        throw new BadRequestException({
             message: 'No se puede acceder al servidor de la base de datos en {database_host}:{database_port}',
-            meta   
+            meta
         });
         case 'P1002':
-            throw new BadRequestException({
+        throw new BadRequestException({
             message: 'Se alcanzó el servidor de base de datos en {database_host}:{database_port} pero se agotó el tiempo de espera',
             meta
         });
         case 'P1003':
-            throw new BadRequestException({
+        throw new BadRequestException({
             message: 'La base de datos {database_file_name} no existe en {database_file_path}',
             meta
         });
@@ -74,6 +74,6 @@ export default function  ExceptionBad (code: string, error: Error, meta: any){
             meta
         });
         default:
-            throw new BadRequestException('No se puede hacer función para la petición. Error: ${error.message}');
+        throw new BadRequestException(`No se puede hacer función para la petición. Error: ${error.message}`);
     }
 }
