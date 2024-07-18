@@ -41,7 +41,7 @@ CREATE TABLE "Notes" (
 
 -- CreateTable
 CREATE TABLE "Favorites" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "IsFavorite" BOOLEAN NOT NULL,
 
     CONSTRAINT "Favorites_pkey" PRIMARY KEY ("id")
@@ -49,12 +49,23 @@ CREATE TABLE "Favorites" (
 
 -- CreateTable
 CREATE TABLE "Quotes" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "phrase" VARCHAR(50) NOT NULL,
     "author" VARCHAR(25) NOT NULL,
     "IdFavorite" BOOLEAN NOT NULL,
 
     CONSTRAINT "Quotes_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Multimedia" (
+    "id" BIGSERIAL NOT NULL,
+    "notesId" BIGINT NOT NULL,
+    "itIsImage" BOOLEAN NOT NULL,
+    "link" VARCHAR(500) NOT NULL,
+    "itIsSound" VARCHAR(255) NOT NULL,
+
+    CONSTRAINT "Multimedia_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -77,3 +88,6 @@ ALTER TABLE "Favorites" ADD CONSTRAINT "Favorites_IsFavorite_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "Quotes" ADD CONSTRAINT "Quotes_IdFavorite_fkey" FOREIGN KEY ("IdFavorite") REFERENCES "Notes"("IsFavorite") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Multimedia" ADD CONSTRAINT "Multimedia_notesId_fkey" FOREIGN KEY ("notesId") REFERENCES "Notes"("idNotes") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -49,6 +49,7 @@ model Notes {
 
   favorites Favorites[]
   quotes    Quotes[]
+  multimedia Multimedia[]
 }
 
 model Favorites {
@@ -65,4 +66,13 @@ model Quotes {
   IdFavorite Boolean
 
   notes Notes? @relation(fields: [IdFavorite], references: [IsFavorite])
+}
+
+model Multimedia {
+  id        BigInt  @id @default(autoincrement())
+  notesId   BigInt
+  NotesId   Notes   @relation(fields: [notesId], references: [idNotes])
+  itIsImage Boolean
+  link      String  @db.VarChar(500)
+  itIsSound String  @db.VarChar(255)
 }
