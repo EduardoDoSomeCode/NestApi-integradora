@@ -8,7 +8,7 @@ import { AllService } from './all.service';
 import { AllController } from './all.controller';
 
 // Importa el módulo PrismaModule desde una ruta relativa en common/prisma.module.ts
-import { PrismaModule } from '../../common/prisma.module';
+import { PrismaModule } from '../../common/utils/prisma.module';
 
 // Define un módulo en NestJS
 @Module({
