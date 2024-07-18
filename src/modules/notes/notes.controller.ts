@@ -1,6 +1,6 @@
 // Importamos los decoradores y las clases necesarias desde '@nestjs/common'
 // el servicio de la entidad y  los DTOs (Data Transfer Objects) para manejar los datos de entrada
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, InternalServerErrorException, HttpException, HttpStatus } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
@@ -13,6 +13,10 @@ export class NotesController {
 // Ruta para crear una nueva entidad
   @Post()
   async create(@Body() createNoteDto: CreateNoteDto): Promise<any> {
+
+    if (createNoteDto.isFavorite === undefined || typeof createNoteDto.isFavorite !== 'boolean') {
+      throw new HttpException('Se requiere marcar si es favorito o no', HttpStatus.BAD_REQUEST);
+    }
     try {
 
       const result = await this.notesService.create(createNoteDto);
