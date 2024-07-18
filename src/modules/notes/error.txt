@@ -1,0 +1,32 @@
+Error creating note: PrismaClientKnownRequestError: 
+Invalid `this.prisma.notes.create()` invocation in
+C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\notes\notes.service.ts:13:38   
+
+  10 async create(createNoteDto: CreateNoteDto) {
+  11   const { title, body, IdUser, isFavorite } = createNoteDto;
+  12   try {
+→ 13     return await this.prisma.notes.create(
+Foreign key constraint failed on the field: `(not available)`
+    at _n.handleRequestError (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@prisma\client\runtime\library.js:122:6927)
+    at _n.handleAndLogRequestError (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@prisma\client\runtime\library.js:122:6235)
+    at _n.request (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@prisma\client\runtime\library.js:122:5919)
+    at l (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@prisma\client\runtime\library.js:131:9116)
+    at NotesService.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\notent\runtime\library.js:122:5919)
+    at l (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@prisma\client\runtime\library.js:131:9116)
+    at NotesService.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\not    at l (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@prisma\client\runtime\library.js:131:9116)
+    at NotesService.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\notme\library.js:131:9116)
+    at NotesService.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\notes\notes.service.ts:13:14)
+    at NotesService.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\notes\notes.service.ts:13:14)
+es\notes.service.ts:13:14)
+    at NotesController.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\    at NotesController.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\notes\notes.controller.ts:13:14)
+    at C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@nestjs\core\router\rou    at C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  code: 'P2003',
+  clientVersion: '5.16.1',
+  meta: { modelName: 'Notes', field_name: '(not available)' }
+}
+[Nest] 12980  - 06/07/2024, 1:17:41 p. m.   ERROR [ExceptionsHandler] Error al crear la nota
+Error: Error al crear la nota
+    at NotesController.create (C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\src\modules\notes\notes.controller.ts:15:13)
+    at C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at C:\Users\obeli\Desktop\Proyectos-DDI\DWI - Felipe\better_me2\NestApi-integradora\node_modules\@nestjs\core\router\router-proxy.js:9:17
