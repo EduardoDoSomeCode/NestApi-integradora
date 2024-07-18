@@ -13,13 +13,13 @@ export class CreateHabitDto {
   @Length(10, 30, { message: 'El título debe tener entre 10 y 30 caracteres.' }) // Debe tener entre 10 y 30 caracteres de longitud
   title: string; // Título del hábito
   
-  @IsDate({ message: 'La fecha debe ser una fecha válida.' }) // Validación: la fecha debe ser una fecha válida
+  // @IsDate({ message: 'La fecha debe ser una fecha válida.' }) // Validación: la fecha debe ser una fecha válida
   @IsNotEmpty({ message: 'Se requiere agregar la fecha.' }) // No debe estar vacía
-  date: Date; // Fecha asociada al hábito
+  recentDate: Date; // Fecha asociada al hábito
   
-  @IsString({ message: 'La descripción debe ser una cadena de caracteres.' }) //La descripción debe ser una cadena de caracteres
-  @Length(0, 100, { message: 'La descripción no puede tener más de 100 caracteres.' }) // La descripción no puede tener más de 100 caracteres
-  description?: string; // Propiedad opcional: Adicional del hábito
+  // @IsString({ message: 'La descripción debe ser una cadena de caracteres.' }) //La descripción debe ser una cadena de caracteres
+  // @Length(0, 100, { message: 'La descripción no puede tener más de 100 caracteres.' }) // La descripción no puede tener más de 100 caracteres
+  // description?: string; // Propiedad opcional: Adicional del hábito
 }
 
 

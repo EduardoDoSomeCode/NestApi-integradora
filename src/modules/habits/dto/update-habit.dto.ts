@@ -13,15 +13,16 @@ export class UpdateHabitDto extends PartialType(CreateHabitDto) {
    title?: string;
  
    // Decoradores para validar la fecha
-   @IsDate({ message: 'La fecha debe ser una fecha válida.' })
-   @IsNotEmpty({ message: 'Se requiere agregar la fecha.' })
-   date: Date;
+   // @IsDate({ message: 'La fecha debe ser una fecha válida.' })
+//   @IsNotEmpty({ message: 'Se requiere agregar la fecha.' })
+   recentDate: Date;
  
-   // Decoradores para validar la descripción
-   @IsString({ message: 'La descripción debe ser una cadena de caracteres.' })
-   @IsOptional() // Permite que la descripción sea opcional al actualizar
-   @Length(0, 100, { message: 'La descripción no puede tener más de 100 caracteres.' })
-   description?: string;
+   // // Decoradores para validar la descripción
+   // @IsOptional()
+   // @IsString({ message: 'La descripción debe ser una cadena de caracteres.' })
+   // @IsOptional() // Permite que la descripción sea opcional al actualizar
+   // @Length(0, 100, { message: 'La descripción no puede tener más de 100 caracteres.' })
+   // description?: string;
 }
 
 
