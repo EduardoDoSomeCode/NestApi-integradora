@@ -25,5 +25,7 @@ export class UsersController {
   @Post()
   async postNewUser(@Body() newUser: Omit<User, 'userId'>) {
     return await this.usersService.postNewUser(newUser);
+
+    
   }
 }

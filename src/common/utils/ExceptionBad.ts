@@ -1,7 +1,7 @@
 import { BadRequestException } from "@nestjs/common";
-
-// Función para lanzar excepciones específicas basadas en el código de error de Prisma
+// Función que maneja excepciones específicas de errores de base de datos
 export default function ExceptionBad(code: string, error: Error, meta: any) {
+// Se evalúa el código de error y se lanza una excepción con el mensaje correspondiente
     switch (code) {
         case 'P1000':
         throw new BadRequestException({

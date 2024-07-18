@@ -15,9 +15,9 @@ generator client {
 
 model User {
   IdUser BigInt @id @default(autoincrement())
-  name String @db.VarChar(25)
-  email String @db.VarChar(30) @unique
-  password String @db.VarChar(15)
+  name String @db.VarChar(255)
+  email String @db.VarChar(255) @unique
+  password String @db.VarChar(255)
   ItHasIntegration Boolean
   alls             All[]
   habits           Habits[]
