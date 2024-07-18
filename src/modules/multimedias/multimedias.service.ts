@@ -14,6 +14,29 @@ export interface multimedia {
 
 @Injectable()
 export class MultimediasService {
+
+  private sampleMulti: multimedia[] = [
+    {
+      id: 1,
+      itIsImage: true,
+      link: BigInt(1234567890123456789),
+      itIsSound: BigInt(9876543210987654321),
+    },
+    {
+      id: 2,
+      itIsImage: false,
+      link: BigInt(2345678901234567890),
+      itIsSound: BigInt(765432109876543210),
+    },
+    {
+      id: 3,
+      itIsImage: true,
+      link: BigInt(3456789012345678901),
+      itIsSound: BigInt(7654321098765432109),
+    },
+  ];
+  
+  
   constructor(private readonly prisma: PrismaService) {}
 
   create(createMultimediaDto: CreateMultimediaDto) {
