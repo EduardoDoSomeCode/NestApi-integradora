@@ -4,8 +4,18 @@ import { UpdateMultimediaDto } from './dto/update-multimedia.dto';
 import { PrismaService } from '../../common/utils/prisma.service';
 import ExceptionBad from 'src/common/utils/ExceptionBad';
 
+export interface multimedia { 
+ 
+  id: number;
+  itIsImage: boolean;
+  link: bigint;
+  itIsSound: bigint;
+}
+
 @Injectable()
 export class MultimediasService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createMultimediaDto: CreateMultimediaDto) {
     return 'This action adds a new multimedia';
   }
