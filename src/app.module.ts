@@ -10,11 +10,14 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { PrismaService } from './prisma.services';
 import { APP_PIPE } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
 
-  imports: [AllModule, HabitsModule, NotesModule, QuotesModule, FavoritesModule, AuthModule, UsersModule],
+  imports: [
+    ConfigModule.forRoot({isGlobal:true}),
+    AllModule, HabitsModule, NotesModule, QuotesModule, FavoritesModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
   

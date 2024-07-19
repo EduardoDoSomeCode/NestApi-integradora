@@ -15,6 +15,7 @@ async function bootstrap() {
   // Configuración global del ValidationPipe
   app.useGlobalPipes(new ValidationPipe());
 
+
   app.use((req, res, next) => {
     const originalSend = res.send;
     res.send = function (body) {
@@ -38,7 +39,7 @@ async function bootstrap() {
   });
 
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
 
