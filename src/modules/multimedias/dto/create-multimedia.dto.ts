@@ -1,25 +1,26 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString, IsUrl, Min } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString, IsUrl, IsInt } from 'class-validator';
 
 export class CreateMultimediaDto {
     
-    @IsNotEmpty({ message: 'Este campo de la Id no este vacio' })
-    @IsInt({ message: 'Debe ser un entero.' })
-    @Min(1, { message: 'El ID debe ser un número positivo.' })
-    id: number;
+    @IsNotEmpty({ message: 'El ID no debe estar vacío' })
+    @IsInt({ message: 'Debe ser un entero' })
+    id: bigint;
 
-    @IsNotEmpty({ message: 'itIsImage no debe estar vacio' })
-    @IsBoolean({ message: 'Debe ser in boleano' })
-    itIsImage: Boolean;
+    @IsNotEmpty({ message: 'notesId no debe estar vacío' })
+    @IsInt({ message: 'Debe ser un entero' })
+    notesId: bigint;
 
-    @IsNotEmpty({ message: 'Link no debe estar vacio' })
+    @IsNotEmpty({ message: 'itIsImage no debe estar vacío' })
+    @IsBoolean({ message: 'Debe ser un booleano' })
+    itIsImage: boolean;
+
+    @IsNotEmpty({ message: 'Link no debe estar vacío' })
     @IsString({ message: 'Debe ser un string' })
-    @IsUrl({}, { message: 'El Link sea valido' })
-    link: String;
+    @IsUrl({}, { message: 'El Link debe ser una URL válida' })
+    link: string;
 
-    @IsNotEmpty({ message: ' El campo itIsSound no debe estar vacio' })
+    @IsNotEmpty({ message: 'El campo itIsSound no debe estar vacío' })
     @IsString({ message: 'Debe ser un string' })
-    @IsUrl({}, { message: 'itIsSound que sea una URL validado' })
-    itIsSound: String;
-
-
+    @IsUrl({}, { message: 'itIsSound debe ser una URL válida' })
+    itIsSound: string;
 }
