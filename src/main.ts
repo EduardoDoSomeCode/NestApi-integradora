@@ -40,15 +40,15 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Better Me API')
+    .setDescription('Catalog of different service use for the Betterme application')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('betterme')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(3000);
 }
 bootstrap();
 
