@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.services';
+import { PrismaService } from '../../common/utils/prisma.service';
 import { CreateMultimediaDto } from './dto/create-multimedia.dto';
 import { UpdateMultimediaDto } from './dto/update-multimedia.dto'
 
