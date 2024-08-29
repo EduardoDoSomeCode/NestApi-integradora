@@ -9,10 +9,25 @@ export class QuotesService {
   constructor(private prisma: PrismaService) {}
 
   async create(createQuoteDto: CreateQuoteDto) {
+    // Verificar si el noteId existe en la tabla Notes
+    const noteExists = await this.prisma.notes.findUnique({
+      where: { idNotes: BigInt(createQuoteDto.noteId) }, // Asegúrate de convertir a BigInt si es necesario
+    });
+  
+    if (!noteExists) {
+      throw new Error('El noteId proporcionado no existe en la base de datos.');
+    }
+  
+    // Si existe, crear la cita
     return this.prisma.quotes.create({
-      data: createQuoteDto,
+      data: {
+        phrase: createQuoteDto.phrase,
+        author: createQuoteDto.author,
+        noteId: createQuoteDto.noteId,
+      },
     });
   }
+  
 
   async findById(id: number) {
     return this.prisma.quotes.findUnique({

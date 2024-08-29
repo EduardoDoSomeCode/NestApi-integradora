@@ -8,7 +8,7 @@ export class UpdateHabitDto extends PartialType(CreateHabitDto) {
   @ApiPropertyOptional({ description: 'Título del hábito, entre 10 y 30 caracteres.', example: 'Leer un libro diario' })
   @IsString({ message: 'El título debe ser una cadena de caracteres.' })
   @IsNotEmpty({ message: 'Se requiere agregar el título.' })
-  @Length(10, 30, { message: 'El título debe tener entre 10 y 30 caracteres.' })
+  @Length(10, 40, { message: 'El título debe tener entre 10 y 30 caracteres.' })
   @IsOptional()
   title?: string;
 
