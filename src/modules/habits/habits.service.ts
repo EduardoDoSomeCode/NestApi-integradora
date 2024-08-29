@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../common/utils/prisma.service';
 import { Prisma, Habits } from '@prisma/client';
-import ExceptionBad from 'src/common/utils/ExceptionBad';
+import ExceptionBad from '../../common/utils/ExceptionBad';
 
 export interface Habit { // Definición de la interfaz Habit
   id: number;
