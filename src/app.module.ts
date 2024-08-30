@@ -1,22 +1,37 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AllModule } from './modules/all/all.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { FavoritesModule } from './modules/favorites/favorites.module';
 import { HabitsModule } from './modules/habits/habits.module';
 import { NotesModule } from './modules/notes/notes.module';
 import { QuotesModule } from './modules/quotes/quotes.module';
-import { FavoritesModule } from './modules/favorites/favorites.module';
 import { UsersModule } from './modules/users/users.module';
-import { AuthModule } from './modules/auth/auth.module';
 import { PrismaService } from './prisma.services';
-import { APP_PIPE } from '@nestjs/core';
+/* import { ProjectModule } from './project/project.module'; */
 
 
 @Module({
 
-  imports: [AllModule, HabitsModule, NotesModule, QuotesModule, FavoritesModule, AuthModule, UsersModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      entities: [],
+      synchronize: true,
+    }),
+    AllModule, HabitsModule, NotesModule, QuotesModule, FavoritesModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  
+
 })
-export class AppModule {}
+export class AppModule { }
+

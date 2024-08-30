@@ -40,29 +40,36 @@ model Habits {
 }
 
 model Notes {
-  idNotes BigInt @id @default(autoincrement())
-  userId BigInt
-  idUser User @relation(fields: [userId], references: [IdUser])
-  IsFavorite Boolean @unique
-  title      String  @db.VarChar(40)
-  body       String  @db.VarChar(250)
-
-  favorites Favorites[]
-  quotes    Quotes[]
+  idNotes    BigInt    @id @default(autoincrement())
+  userId     BigInt
+  idUser     User      @relation(fields: [userId], references: [IdUser])
+  IsFavorite Boolean   @default(false)
+  title      String    @db.VarChar(40)
+  body       String    @db.VarChar(250)
+  
+  favorites  Favorites[]
+  quotes     Quotes[]
+  multimedia Multimedia[]
 }
-
+model Multimedia {
+  id        BigInt  @id @default(autoincrement())
+  notesId   BigInt
+  note       Notes     @relation(fields: [notesId], references: [idNotes])
+  itIsImage Boolean
+  link      String  @db.VarChar(500)
+  itIsSound String  @db.VarChar(255)
+}
 model Favorites {
-  id         Int  @id @default(autoincrement())
-  IsFavorite Boolean
-
-  notes Notes? @relation(fields: [IsFavorite], references: [IsFavorite])
+  id         Int       @id @default(autoincrement())
+  noteId     BigInt    // Cambia este campo para que haga referencia a Notes
+  note       Notes     @relation(fields: [noteId], references: [idNotes])
 }
 
 model Quotes {
-  id         Int  @id @default(autoincrement())
-  phrase     String  @db.VarChar(50)
-  author     String  @db.VarChar(25)
-  IdFavorite Boolean
-
-  notes Notes? @relation(fields: [IdFavorite], references: [IsFavorite])
+  id         Int       @id @default(autoincrement())
+  noteId     BigInt    // Cambia este campo para que haga referencia a Notes
+  note       Notes     @relation(fields: [noteId], references: [idNotes])
+  phrase     String   @db.VarChar(150) 
+  author     String   @db.VarChar(50)
 }
+

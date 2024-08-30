@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../common/utils/prisma.service';
 import { Prisma, Habits } from '@prisma/client';
 import ExceptionBad from 'src/common/utils/ExceptionBad';
+import { CreateHabitDto } from './dto/create-habit.dto';
+import { UpdateHabitDto } from './dto/update-habit.dto';
 
 export interface Habit { // Definición de la interfaz Habit
   id: number;
@@ -13,102 +15,66 @@ export interface Habit { // Definición de la interfaz Habit
 
 @Injectable()
 export class HabitsService {
-  private sampleHabits: Habit[] = [ // Ejemplos de hábitos predefinidos
-    {
-      id: 1,
-      userId: 1,
-      title: 'Meditate for 15 minutes',
-      description: '7nuu',
-      date: new Date('2024-07-05'),
-    },
-    {
-      id: 2,
-      userId: 2,
-      title: 'Exercise for 1 hour',
-      description: '7nuu',
-      date: new Date('2024-07-04'),
-    },
-    {
-      id: 3,
-      userId: 2,
-      title: 'Meditate for 15 minutes',
-      description: '7nuu',
-      date: new Date('2024-07-03'),
-    },
-  ];
+
 
   constructor(private readonly prisma: PrismaService) {} // Inyección para el servicio de Prisma
 
-  async createHabitFromSample(id: number): Promise<Habits> {
-    const habitData = this.sampleHabits.find(habit => habit.id === id);
-
-    try { // Crear un nuevo hábito en la base de datos utilizando Prisma
+  async create(createHabitDto: CreateHabitDto): Promise<any> {
+    try {
       const newHabit = await this.prisma.habits.create({
         data: {
-          title: habitData.title,
-          recentDate: habitData.date,
-          userId: 1, // Ajustar userId según lógica de la aplicación
+          userId: BigInt(createHabitDto.userId),
+          title: createHabitDto.title,
+          recentDate: createHabitDto.recentDate,  // Convertir la fecha a un objeto Date
+          // description: createHabitDto.description || null,
         },
       });
-      return newHabit; // Retorna el nuevo hábito creado
+      return newHabit;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); 
+      console.error('Error al crear el hábito:', error);
+      throw new Error('Error al crear el hábito');
     }
   }
-  
-  async findAll(): Promise<Habits[]> { // Obtener todos los hábitos
-    return this.prisma.habits.findMany()
-      .catch((error) => {
-        throw ExceptionBad(error.code, error, error.meta); 
-      });
-  }
 
-  async findOne(idHabits: bigint): Promise<Habits> { // Obtener un hábito por ID
+  async findOne(id: bigint): Promise<any> {
     try {
       const habit = await this.prisma.habits.findUnique({
-        where: { idHabits },
+        where: { idHabits: id },
       });
-
-      if (!habit) {
-        throw new NotFoundException(`El hábito con id ${idHabits} no se encontró`); 
-      }
-
       return habit;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); 
+      console.error('Error al obtener el hábito:', error);
+      throw new Error('Error al obtener el hábito');
     }
   }
 
-  async update(idHabits: bigint, data: Prisma.HabitsUpdateInput): Promise<Habits> { // Actualizar un hábito por ID
+  async update(id: bigint, updateHabitDto: UpdateHabitDto): Promise<any> {
     try {
-      const habit = await this.prisma.habits.update({
-        where: { idHabits },
-        data,
+      const updatedHabit = await this.prisma.habits.update({
+        where: { idHabits: id },
+        data: {
+          userId: updateHabitDto.userId ? BigInt(updateHabitDto.userId) : undefined,
+          title: updateHabitDto.title,
+          recentDate: updateHabitDto.recentDate,
+          // description: updateHabitDto.description || null,
+        },
       });
-
-      if (!habit) {
-        throw new NotFoundException(`El hábito con id ${idHabits} no se encontró`); // Excepción si no se encuentra el hábito
-      }
-
-      return habit;
+      return updatedHabit;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); 
+      console.error('Error al actualizar el hábito:', error);
+      throw new Error('Error al actualizar el hábito');
     }
   }
-  
-  async remove(idHabits: bigint): Promise<Habits> { // Eliminar un hábito por ID
+
+  async remove(id: bigint): Promise<any> {
     try {
-      const habit = await this.prisma.habits.delete({
-        where: { idHabits },
+      const deletedHabit = await this.prisma.habits.delete({
+        where: { idHabits: id },
       });
-
-      if (!habit) {
-        throw new NotFoundException(`El hábito con id ${idHabits} no se encontró`); 
-      }
-
-      return habit;
+      return deletedHabit;
     } catch (error) {
-      throw new ExceptionBad(error.code, error, error.meta); 
+      console.error('Error al eliminar el hábito:', error);
+      throw new Error('Error al eliminar el hábito');
     }
   }
 }

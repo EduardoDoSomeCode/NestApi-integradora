@@ -1,26 +1,62 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import { PrismaService } from 'src/prisma.services';
 
 @Injectable()
 export class FavoritesService {
-  create(createFavoriteDto: CreateFavoriteDto) {
-    return 'This action adds a new favorite';
+  constructor(private prisma: PrismaService) {}
+
+  async create(createFavoriteDto: CreateFavoriteDto) {
+    const { noteId } = createFavoriteDto;
+    const existingNote = await this.prisma.notes.findUnique({ where: { idNotes: noteId } });
+    if (!existingNote) {
+      throw new NotFoundException(`Note with ID ${noteId} not found.`);
+    }
+
+    return this.prisma.favorites.create({
+      data: {
+        noteId,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all favorites`;
+  async findAll() {
+    return this.prisma.favorites.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} favorite`;
+  async findOne(id: number) {
+    const favorite = await this.prisma.favorites.findUnique({
+      where: { id },
+      include: { note: true }, // Incluir la relación con la nota asociada
+    });
+    if (!favorite) {
+      throw new NotFoundException(`Favorite with ID ${id} not found.`);
+    }
+    return favorite;
   }
 
-  update(id: number, updateFavoriteDto: UpdateFavoriteDto) {
-    return `This action updates a #${id} favorite`;
+  async update(id: number, updateFavoriteDto: UpdateFavoriteDto) {
+    const { noteId } = updateFavoriteDto;
+    const existingNote = await this.prisma.notes.findUnique({ where: { idNotes: noteId } });
+    if (!existingNote) {
+      throw new NotFoundException(`Note with ID ${noteId} not found.`);
+    }
+
+    return this.prisma.favorites.update({
+      where: { id },
+      data: {
+        noteId,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} favorite`;
+  async remove(id: number) {
+    const favorite = await this.prisma.favorites.findUnique({ where: { id } });
+    if (!favorite) {
+      throw new NotFoundException(`Favorite with ID ${id} not found.`);
+    }
+
+    return this.prisma.favorites.delete({ where: { id } });
   }
 }

@@ -1,6 +1,9 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {PORT} from './config.js'
+import { hostname } from 'os';
 
 function replacer(key: any, value: any) {
   if (typeof value === 'bigint') {
@@ -12,9 +15,9 @@ function replacer(key: any, value: any) {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   // Configuración global del ValidationPipe
   app.useGlobalPipes(new ValidationPipe());
+
 
   app.use((req, res, next) => {
     const originalSend = res.send;
@@ -27,8 +30,27 @@ async function bootstrap() {
     next();
   });
 
+  app.use((req, res, next) => {
+    const originalJson = res.json;
+    res.json = function (body) {
+      body = JSON.parse(JSON.stringify(body, (key, value) =>
+        typeof value === 'bigint' ? value.toString() : value
+      ));
+      originalJson.call(this, body);
+    };
+    next();
+  });
 
-  await app.listen(3000);
+  const config = new DocumentBuilder()
+    .setTitle('Better Me API')
+    .setDescription('Catalog of different service use for the Betterme application')
+    .setVersion('1.0')
+    .addTag('betterme')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  await app.listen(   3000 );
 }
 bootstrap();
 

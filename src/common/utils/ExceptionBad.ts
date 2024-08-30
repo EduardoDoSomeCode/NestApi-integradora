@@ -1,25 +1,25 @@
 import { BadRequestException } from "@nestjs/common";
 // Función que maneja excepciones específicas de errores de base de datos
-export default function  ExceptionBad (code: string, error: Error, meta: any){
+export default function ExceptionBad(code: string, error: Error, meta: any) {
 // Se evalúa el código de error y se lanza una excepción con el mensaje correspondiente
-    switch(code){
+    switch (code) {
         case 'P1000':
         throw new BadRequestException({
             message: 'Error de autenticación en el servidor de base de datos en {database_host}',
             meta
         });
         case 'P1001':
-            throw new BadRequestException({
+        throw new BadRequestException({
             message: 'No se puede acceder al servidor de la base de datos en {database_host}:{database_port}',
-            meta   
+            meta
         });
         case 'P1002':
-            throw new BadRequestException({
+        throw new BadRequestException({
             message: 'Se alcanzó el servidor de base de datos en {database_host}:{database_port} pero se agotó el tiempo de espera',
             meta
         });
         case 'P1003':
-            throw new BadRequestException({
+        throw new BadRequestException({
             message: 'La base de datos {database_file_name} no existe en {database_file_path}',
             meta
         });
@@ -73,9 +73,7 @@ export default function  ExceptionBad (code: string, error: Error, meta: any){
             message: 'Error de validación de datos',
             meta
         });
-        default: // Caso por defecto para errores no manejados específicamente
-            throw new BadRequestException(`No se puede hacer función para la petición. Error: ${error.message}`);
-
-        
+        default:
+        throw new BadRequestException(`No se puede hacer función para la petición. Error: ${error.message}`);
     }
 }
