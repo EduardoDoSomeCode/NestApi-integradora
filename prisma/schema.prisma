@@ -69,7 +69,7 @@ model Quotes {
   id         Int       @id @default(autoincrement())
   noteId     BigInt    // Cambia este campo para que haga referencia a Notes
   note       Notes     @relation(fields: [noteId], references: [idNotes])
-  phrase     String  @db.VarChar(50)
-  author     String  @db.VarChar(25)
+  phrase     String   @db.VarChar(150) 
+  author     String   @db.VarChar(50)
 }
 
